@@ -3,7 +3,7 @@ import { FieldPacket, QueryError } from "mysql";
 import MySQLDatabase from "../core/db/mysql.database";
 import User from "../models/user";
 
-export default class CustomersRepository {
+export default class UsersRepository {
 
     public static async findAll(): Promise<User[]> {
         return new Promise((resolve, reject) => {
@@ -37,7 +37,7 @@ export default class CustomersRepository {
     public static async create(data: any): Promise<User> {
         return new Promise((resolve, reject) => {
             MySQLDatabase.getConnection().execute(
-                `INSERT INTO user (
+                `INSERT INTO users (
                     username, password, name, email
                 ) VALUES (
                     ?, ?, ?, ?
@@ -59,7 +59,7 @@ export default class CustomersRepository {
     public static async update(id: number, data: any): Promise<User> {
         return new Promise((resolve, reject) => {
             MySQLDatabase.getConnection().execute(
-                `UPDATE customers SET
+                `UPDATE users SET
                     username = ?, password = ?, name = ?, email = ?
                 WHERE id = ?`,
                 [data.username, createHash("sha256").update(data.password).digest("hex"), data.name, data.email, id],
